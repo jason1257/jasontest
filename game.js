@@ -9,33 +9,40 @@ class Game {
     this.enemyTimer = 0;
     this.enemyInterval = 100;
     this.gameOver = false;
+    this.gameTime = 0;
+    this.timeLimit = 30;
   }
   update(deltaTime) {
     if (!this.gameOver) {
       this.player.update();
-    }
-    for (let i = 0; i < this.enemies.length; i++) {
-      if (this.enemies[i]) {
-        this.enemies[i].update();
-        if (this.checkCollision(this.player, this.enemies[i])) {
-          this.enemies[i].markedForDeletion = true;
-          this.enemies = [];
-          // console.log("Game Over");
-          this.gameOver = true;
+
+      for (let i = 0; i < this.enemies.length; i++) {
+        if (this.enemies[i]) {
+          this.enemies[i].update();
+          if (this.checkCollision(this.player, this.enemies[i])) {
+            this.enemies[i].markedForDeletion = true;
+            this.enemies = [];
+            // console.log("Game Over");
+            this.gameOver = true;
+          }
         }
       }
-    }
-    this.enemies = this.enemies.filter((enemy) => !enemy.markedForDeletion);
-    if (this.enemyTimer > this.enemyInterval && !this.gameOver) {
-      this.addEnemy();
-      this.enemyTimer = 0;
-    } else {
-      this.enemyTimer += deltaTime;
+      this.enemies = this.enemies.filter((enemy) => !enemy.markedForDeletion);
+      if (this.enemyTimer > this.enemyInterval && !this.gameOver) {
+        this.addEnemy();
+        this.enemyTimer = 0;
+      } else {
+        this.enemyTimer += deltaTime;
+      }
+
+      this.ui.update();
     }
   }
   draw(context) {
     this.ui.draw(context);
-    this.player.draw(context);
+    if (!this.gameOver) {
+      this.player.draw(context);
+    }
     for (let i = 0; i < this.enemies.length; i++) {
       if (this.enemies[i]) {
         this.enemies[i].draw(context);
