@@ -5,6 +5,7 @@ class Game {
     this.input = new InputHandler(this);
     this.player = new Player(this);
     this.enemies = [];
+    this.ui = new UI(this);
     this.enemyTimer = 0;
     this.enemyInterval = 100;
     this.gameOver = false;
@@ -19,7 +20,7 @@ class Game {
         if (this.checkCollision(this.player, this.enemies[i])) {
           this.enemies[i].markedForDeletion = true;
           this.enemies = [];
-          console.log("Game Over");
+          // console.log("Game Over");
           this.gameOver = true;
         }
       }
@@ -33,6 +34,7 @@ class Game {
     }
   }
   draw(context) {
+    this.ui.draw(context);
     this.player.draw(context);
     for (let i = 0; i < this.enemies.length; i++) {
       if (this.enemies[i]) {
