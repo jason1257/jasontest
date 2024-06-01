@@ -20,20 +20,24 @@ window.addEventListener("load", function () {
     timer += deltaTime;
     lastTime = timeStamp;
 
-    if (delta >= drawInterval) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      game.draw(ctx);
-      game.update(deltaTime);
-      delta -= drawInterval;
-      drawCount++;
-    }
+    if (!game.gameOver) {
+      if (delta >= drawInterval) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        game.update(deltaTime);
+        game.draw(ctx);
+        delta -= drawInterval;
+        drawCount++;
+        // console.log("running");
+      }
 
-    // if (timer >= 1000) {
-    //   console.log(drawCount);
-    //   timer = 0;
-    //   drawCount = 0;
-    // }
-    requestAnimationFrame(animate);
+      // if (timer >= 1000) {
+      //   console.log(drawCount);
+      //   timer = 0;
+      //   drawCount = 0;
+      // }
+
+      requestAnimationFrame(animate);
+    }
   }
   animate(0);
 });

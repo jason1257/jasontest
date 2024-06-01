@@ -18,8 +18,9 @@ class Game {
         this.enemies[i].update();
         if (this.checkCollision(this.player, this.enemies[i])) {
           this.enemies[i].markedForDeletion = true;
-          this.gameOver = true;
           this.enemies = [];
+          console.log("Game Over");
+          this.gameOver = true;
         }
       }
     }
